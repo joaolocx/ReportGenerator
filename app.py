@@ -3,6 +3,8 @@ import pandas as pd
 import mysql.connector
 from mysql.connector import Error
 
+mysql_secrets = st.secrets["mysql"]
+
 def create_connection(host_name, user_name, user_password, db_name):
     connection = None
     try:
@@ -22,9 +24,7 @@ def create_connection(host_name, user_name, user_password, db_name):
 st.header("Gerador Automático de Relatórios")
 st.write("Esse gerador vai auxiliar na busca de dados do sistema")
 st.sidebar.title("Filtros")
-bd_user = st.sidebar.text_input(label="Usuário: ")
-bd_pass = st.sidebar.text_input(label="Senha: ", type="password")
-locxre = create_connection("locx-readonly.cy9zpcnfbawx.us-east-1.rds.amazonaws.com", bd_user, bd_pass, "locx")
+locxre = create_connection(mysql_secrets["host"], mysql_secrets["user"], mysql_secrets["password"], mysql_secrets["database"])
 cur = locxre.cursor()
 
 colunas_select = st.sidebar.multiselect(
