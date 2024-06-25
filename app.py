@@ -21,11 +21,15 @@ def create_connection(host_name, user_name, user_password, db_name):
     return connection
 
 
-st.header("Gerador Automático de Relatórios")
-st.write("Esse gerador vai auxiliar na busca de dados do sistema")
-st.sidebar.title("Filtros")
 locxre = create_connection(mysql_secrets["host"], mysql_secrets["user"], mysql_secrets["password"], mysql_secrets["database"])
 cur = locxre.cursor()
+st.header("Gerador Automático de Relatórios")
+if locxre is not None:
+	st.write('conexão ok')
+else:
+	st.warning('erro de conexão')
+st.write("Esse gerador vai auxiliar na busca de dados do sistema")
+st.sidebar.title("Filtros")
 
 colunas_select = st.sidebar.multiselect(
     label='Colunas',
